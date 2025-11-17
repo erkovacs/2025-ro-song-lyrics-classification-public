@@ -1,6 +1,28 @@
 # 2025-ro-song-lyrics-classification-public
 2025 Romanian Song Lyrics Classification - Assets, Libraries, Data
 
+## Context
+
+This is the repository associated with our article "Music Genre classification using prosodic, stylistic, syntactic, and sentiment-based features". 
+
+## File index
+|File||
+|---|---|
+|```./sentilex```| contains the basic files from which we started, identical to the current  release of SentiLex|
+|```./sentilex_v2``` | contains the modified versions of the SentiLex files, as described in the article|
+|```./vulgarities``` | lexicon of vulgar words in Romanian|
+|```20251117-songs-data.csv``` | the training dataset scraped as described in the article. Contains both the raw lyrics data and two cleaned versions, one using our own approach and one cleaned by an LLM|
+|```categories.csv``` | the index of the category pages from tabulaturi.ro|
+|```chords.csv``` | a lexicon of all chord symbols, we used it in the cleaning process|
+|```genre_mappings.csv```, ```mappings.md``` | the mappings describing the method we used to reduce the number of genres to a manageable amount|
+|```lyrics_parser_v2.py```| the code producing the features |
+|```sentiment_test.csv``` | the test dataset we used to evaluate our improvements to SentiLex [1]|
+|```songs_categories.csv``` | an index of the song and the category|
+
+## Parser usage
+
+The parser is a basic python class. In order to choose the lexicons, we need to provide the information in the constructor:
+
 ```python
 
 parser = LyricsParser(
@@ -8,6 +30,7 @@ parser = LyricsParser(
     negative_words='data/sentilex_v2/negative_words_ro.txt',
     positive_words='data/sentilex_v2/positive_words_ro.txt')
 ```
+Then it is possible to apply all the functions to parse the text into the numeric features. Here I am using a Pandas dataframe and the tqdm library to encode the features, mapping them onto new columns on the same dataframe object:
 
 ```python
 from tqdm import tqdm
@@ -31,6 +54,11 @@ df['enjabement_count'] = df['cleaned_text_chatgpt'].progress_apply(parser.get_en
 df['swear_word_ratio'] = df['cleaned_text_chatgpt'].progress_apply(parser.get_swear_word_ratio)
 
 df['sentiment_scores_sentilex'] = df['cleaned_text_chatgpt'].progress_apply(parser.get_sentiment_scores)
+
+# To split the negative and positive sentiment into separate features (normally they are combined),
+# we need to adjust them a bit (get only the nefative and positive components respectively)
+# Same goes for the positions of the repetitions, we need to parse the end and beginning repetitions
+# into their own features
 
 df['negative_sentiment_sentilex_v2'] = df['sentiment_scores'].progress_apply(lambda x: x['negative_sentiment'])
 df['positive_sentiment_sentilex_v2'] = df['sentiment_scores'].progress_apply(lambda x: x['positive_sentiment'])
