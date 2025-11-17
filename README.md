@@ -65,3 +65,11 @@ df['positive_sentiment_sentilex_v2'] = df['sentiment_scores'].progress_apply(lam
 df['repetitions_beginning'] = df['repetitions_position'].progress_apply(lambda x: x['beginning'])
 df['repetitions_end'] = df['repetitions_position'].progress_apply(lambda x: x['end'])
 ```
+
+## References
+
+[1] - Dumitrescu et al. (2020), The birth of Romanian BERT, Findings of the Association for Computational Linguistics: EMNLP 2020, https://aclanthology.org/2020.findings-emnlp.387/
+
+## Cite us
+
+-- TO BE ADDED -- 
