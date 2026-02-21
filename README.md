@@ -19,6 +19,22 @@ This is the repository associated with our article "Music Genre classification u
 |```sentiment_test.csv``` | the test dataset we used to evaluate our improvements to SentiLex [1]|
 |```songs_categories.csv``` | an index of the song and the category|
 
+## Installation
+
+Easiest by just downloading all the files.
+
+```bash
+!wget -O lyrics_parser.py 'https://raw.githubusercontent.com/erkovacs/2025-ro-song-lyrics-classification-public/refs/heads/main/lyrics_parser_v2.py'
+!mkdir data
+!mkdir 'data/vulgarities'
+!mkdir 'data/sentilex'
+!wget -O 'data/sentilex/negative_words_ro.txt' 'https://raw.githubusercontent.com/erkovacs/2025-ro-song-lyrics-classification-public/refs/heads/main/sentilex_v2/negative_words_ro.txt'
+!wget -O 'data/sentilex/positive_words_ro.txt' 'https://raw.githubusercontent.com/erkovacs/2025-ro-song-lyrics-classification-public/refs/heads/main/sentilex_v2/positive_words_ro.txt'
+!wget -O 'data/chords.csv' 'https://raw.githubusercontent.com/erkovacs/2025-ro-song-lyrics-classification-public/refs/heads/main/chords.csv'
+!wget -O 'data/vulgarities/ro_swear_words - slurs-1.csv' 'https://raw.githubusercontent.com/erkovacs/2025-ro-song-lyrics-classification-public/refs/heads/main/vulgarities/ro_swear_words%20-%20slurs-1.csv'
+!wget -O 'data/vulgarities/ro_swear_words - vulgarities-1.csv' 'https://raw.githubusercontent.com/erkovacs/2025-ro-song-lyrics-classification-public/refs/heads/main/vulgarities/ro_swear_words%20-%20vulgarities-1.csv'
+```
+
 ## Parser usage
 
 The parser is a basic python class. In order to choose the lexicons, we need to provide the information in the constructor:
